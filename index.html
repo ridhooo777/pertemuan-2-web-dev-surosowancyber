@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoCalc - Kalkulator Ilmiah Premium</title>
+    <meta name="description" content="Kalkulator Ilmiah Modern dengan antarmuka Glassmorphic, visualizer, riwayat calculations, dan audio taktil.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header / Logo -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="neon-text">NEO</span><span>CALC</span>
+            </div>
+            <p class="subtitle">Kalkulator Ilmiah Premium & Modern</p>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="glass-card calc-wrapper" id="calc-container">
+                <!-- Mode Selector & Info -->
+                <div class="calc-top-bar">
+                    <div class="mode-status">
+                        <span class="status-dot"></span>
+                        <span id="mode-text">Mode Standar</span>
+                    </div>
+                    <button id="mode-toggle-btn" class="mode-btn">
+                        <span>Scientific Mode</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Calculator Display -->
+                <div class="calc-display-container">
+                    <div id="calc-expr" class="calc-expression"></div>
+                    <div id="calc-screen" class="calc-screen">0</div>
+                </div>
+
+                <!-- Main Calculator Workspace -->
+                <div class="calc-workspace">
+                    <!-- Scientific Keys Panel (Collapsed by default, expands on toggle) -->
+                    <div id="scientific-panel" class="scientific-grid hidden">
+                        <button class="btn btn-sci" data-val="sin" title="Sine">sin</button>
+                        <button class="btn btn-sci" data-val="cos" title="Cosine">cos</button>
+                        <button class="btn btn-sci" data-val="tan" title="Tangent">tan</button>
+                        <button class="btn btn-sci" data-val="deg-rad" id="btn-deg-rad" title="Degree / Radian">Rad</button>
+                        
+                        <button class="btn btn-sci" data-val="ln" title="Natural Logarithm">ln</button>
+                        <button class="btn btn-sci" data-val="log" title="Logarithm base 10">log</button>
+                        <button class="btn btn-sci" data-val="pi" title="Pi Constant">π</button>
+                        <button class="btn btn-sci" data-val="e" title="Euler's Constant">e</button>
+                        
+                        <button class="btn btn-sci" data-val="^" title="Power">x<sup>y</sup></button>
+                        <button class="btn btn-sci" data-val="sqrt" title="Square Root">√</button>
+                        <button class="btn btn-sci" data-val="fact" title="Factorial">x!</button>
+                        <button class="btn btn-sci" data-val="1/" title="Reciprocal">1/x</button>
+                        
+                        <button class="btn btn-sci" data-val="(" title="Left Parenthesis">(</button>
+                        <button class="btn btn-sci" data-val=")" title="Right Parenthesis">)</button>
+                        <button class="btn btn-sci" data-val="abs" title="Absolute Value">|x|</button>
+                        <button class="btn btn-sci" data-val="exp" title="Exponential">exp</button>
+                    </div>
+
+                    <!-- Standard Keys Panel -->
+                    <div class="standard-grid">
+                        <button id="btn-clear" class="btn btn-action" data-val="C">C</button>
+                        <button id="btn-backspace" class="btn btn-action" data-val="backspace">⌫</button>
+                        <button id="btn-modulo" class="btn btn-action" data-val="%">%</button>
+                        <button id="btn-divide" class="btn btn-operator" data-val="/">÷</button>
+
+                        <button id="btn-7" class="btn btn-num" data-val="7">7</button>
+                        <button id="btn-8" class="btn btn-num" data-val="8">8</button>
+                        <button id="btn-9" class="btn btn-num" data-val="9">9</button>
+                        <button id="btn-multiply" class="btn btn-operator" data-val="*">×</button>
+
+                        <button id="btn-4" class="btn btn-num" data-val="4">4</button>
+                        <button id="btn-5" class="btn btn-num" data-val="5">5</button>
+                        <button id="btn-6" class="btn btn-num" data-val="6">6</button>
+                        <button id="btn-subtract" class="btn btn-operator" data-val="-">−</button>
+
+                        <button id="btn-1" class="btn btn-num" data-val="1">1</button>
+                        <button id="btn-2" class="btn btn-num" data-val="2">2</button>
+                        <button id="btn-3" class="btn btn-num" data-val="3">3</button>
+                        <button id="btn-add" class="btn btn-operator" data-val="+">+</button>
+
+                        <button id="btn-negate" class="btn btn-num" data-val="negate">±</button>
+                        <button id="btn-0" class="btn btn-num" data-val="0">0</button>
+                        <button id="btn-decimal" class="btn btn-num" data-val=".">.</button>
+                        <button id="btn-equals" class="btn btn-equals" data-val="=">=</button>
+                    </div>
+                </div>
+
+                <!-- Calculator History Drawer toggle and Drawer -->
+                <div class="calc-history-toggle">
+                    <button id="toggle-history-btn" class="btn-text">
+                        <span>Tampilkan Riwayat</span>
+                        <span class="arrow-icon">▼</span>
+                    </button>
+                </div>
+                <div id="calc-history-drawer" class="history-drawer">
+                    <div class="history-header">
+                        <h3>Riwayat Perhitungan</h3>
+                        <button id="clear-history-btn" class="btn-clear-history">Bersihkan</button>
+                    </div>
+                    <ul id="history-list" class="history-list">
+                        <li class="empty-history">Belum ada riwayat</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <!-- Audio toggle controls in footer -->
+        <footer class="app-footer">
+            <button id="sound-toggle-btn" class="sound-toggle-btn">
+                <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                </svg>
+                <svg class="sound-icon-off hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                    <line x1="23" y1="9" x2="17" y2="15"/>
+                    <line x1="17" y1="9" x2="23" y2="15"/>
+                </svg>
+                <span>Efek Suara: Aktif</span>
+            </button>
+            <p>&copy; 2026 NeoCalc. Premium design & smart math engine.</p>
+        </footer>
+    </div>
+
+    <!-- Script JS -->
+    <script src="app.js"></script>
+</body>
+</html>

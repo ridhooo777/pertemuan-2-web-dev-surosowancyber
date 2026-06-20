@@ -31,15 +31,29 @@
                         <span class="status-dot"></span>
                         <span id="mode-text">Mode Standar</span>
                     </div>
+                    
+                    <div class="theme-select-container">
+                        <button id="theme-menu-btn" class="theme-menu-btn" title="Ganti Tema">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                            </svg>
+                            <span id="active-theme-name">Obsidian</span>
+                        </button>
+                        <div id="theme-dropdown" class="theme-dropdown hidden">
+                            <button class="theme-opt-btn active" data-theme="theme-obsidian">Obsidian</button>
+                            <button class="theme-opt-btn" data-theme="theme-alabaster">Alabaster</button>
+                            <button class="theme-opt-btn" data-theme="theme-amber">Amber</button>
+                        </div>
+                    </div>
+
                     <button id="mode-toggle-btn" class="mode-btn">
                         <span>Scientific Mode</span>
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </button>
-                </div>
-
-                <!-- Calculator Display -->
+                </div>                <!-- Calculator Display -->
                 <div class="calc-display-container">
                     <div id="calc-expr" class="calc-expression"></div>
                     <div id="calc-screen" class="calc-screen">0</div>

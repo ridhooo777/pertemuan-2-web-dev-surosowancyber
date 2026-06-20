@@ -100,6 +100,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==========================================================================
+    // THEME SWITCHER LOGIC
+    // ==========================================================================
+    const themeMenuBtn = document.getElementById('theme-menu-btn');
+    const themeDropdown = document.getElementById('theme-dropdown');
+    const themeOptBtns = document.querySelectorAll('.theme-opt-btn');
+    const activeThemeNameText = document.getElementById('active-theme-name');
+
+    // Load theme from local storage
+    const savedTheme = localStorage.getItem('calc_theme') || 'theme-obsidian';
+    applyTheme(savedTheme);
+
+    themeMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playSound('click');
+        themeDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => {
+        themeDropdown.classList.add('hidden');
+    });
+
+    themeOptBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            playSound('success');
+            const targetTheme = btn.getAttribute('data-theme');
+            applyTheme(targetTheme);
+            themeDropdown.classList.add('hidden');
+        });
+    });
+
+    function applyTheme(themeClass) {
+        document.body.classList.remove('theme-obsidian', 'theme-alabaster', 'theme-amber');
+        document.body.classList.add(themeClass);
+        localStorage.setItem('calc_theme', themeClass);
+        
+        themeOptBtns.forEach(btn => {
+            if (btn.getAttribute('data-theme') === themeClass) {
+                btn.classList.add('active');
+                activeThemeNameText.textContent = btn.textContent;
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+
+    // ==========================================================================
     // MODE TOGGLER (STANDARD vs SCIENTIFIC)
     // ==========================================================================
     const appContainer = document.querySelector('.app-container');
@@ -359,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
         processed = processed.replaceAll('^', '**');
 
         // Whitelist regex to ensure only mathematical codes/numbers can be executed
-        const allowedPattern = /^[0-9.+\-*/%()e\s]|Math\.(sin|cos|tan|log|log10|sqrt|PI|E|abs|exp)|factorial/g;
+        const allowedPattern = /[0-9.+\-*/%()e\s]|Math\.(sin|cos|tan|log|log10|sqrt|PI|E|abs|exp)|factorial/g;
         const testStr = processed.replace(allowedPattern, '');
         if (testStr.trim().length > 0) {
             throw new Error("Karakter tidak valid");
